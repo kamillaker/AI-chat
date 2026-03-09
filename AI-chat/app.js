@@ -14,3 +14,13 @@ sendBtn.addEventListener('click', () => {
   messageInput.value = '';
   messageList.scrollTop = messageList.scrollHeight;
 });
+
+
+
+class KamillaMsg extends HTMLElement {
+  connectedCallback() {
+    this.textContent = "Hi! I want to know about AI chat UI.";
+  }
+}
+
+customElements.define("kamilla-msg", KamillaMsg);
