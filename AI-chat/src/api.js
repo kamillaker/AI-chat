@@ -1,4 +1,4 @@
-const API_KEY = 'xsk-or-v1-b668c2da189f8da65b139f94923c1425f5d870e81c46290b5eaeee1e760fde5d';
+const API_KEY = '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';
 const MODEL = 'z-ai/glm-4.5-air:free';
 export const BASE_URL = 'https://openrouter.ai/api/v1';
 

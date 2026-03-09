@@ -15,7 +15,17 @@
         </div>
 
         <div class="h-screen w-screen flex flex-col">
-            <div id="messages-history" class="flex-1 bg-gray-100 p-4 flex flex-col gap-2 overflow-y-auto"></div>
+            <div id="messages-history" class="flex-1 bg-gray-100 p-4 flex flex-col gap-2 overflow-y-auto">
+                <chat-message role="assistant">
+                    <div>What can I help you with?</div>
+                </chat-message>
+                <chat-message role="user">
+                    <div>What is your name?</div>
+                </chat-message>
+                <chat-message role="assistant">
+                    <div>I am Cognify, your AI assistant.</div>
+                </chat-message>
+            </div>
             <form id="messages-form" class="flex p-4 bg-gray-200 pb-8">
                 <input
                     type="text"
