@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AI Chat UI</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex">
+        <div class="bg-gray-30 w-80 h-screen">
+            <button class="p-2 w-full h-20 mb-4 bg-gray-700 text-gray-300">+ New chat</button>
+            <div class="block rounded-lg bg-gray-200 p-2 my-1">Chat 1</div>
+            <div class="p-2 my-1">Chat 2</div>
+        </div>
+
+        <div class="h-screen w-screen flex flex-col">
+            <div id="messages-history" class="flex-1 bg-gray-100 p-4 flex flex-col gap-2 overflow-y-auto">
+                <chat-message role="assistant">
+                    <div>What can I help you with?</div>
+                </chat-message>
+                <chat-message role="user">
+                    <div>What is your name?</div>
+                </chat-message>
+                <chat-message role="assistant">
+                    <div>I am Cognify, your AI assistant.</div>
+                </chat-message>
+            </div>
+            <form id="messages-form" class="flex p-4 bg-gray-200 pb-8">
+                <input
+                    type="text"
+                    id="messages-form-input"
+                    placeholder="Type your message..."
+                    class="flex-1 p-2 border rounded"
+                />
+                <button type="submit" class="ml-2 px-4 bg-blue-500 text-white rounded">Send</button>
+            </form>
+        </div>
+
+        <script type="module" src="./components.js"></script>
+        <script type="module" src="./api.js"></script>
+        <script type="module" src="./action.js"></script>
+    </body>
+</html>
