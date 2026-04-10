@@ -1,18 +1,20 @@
+'use client';
 import { useState, useEffect } from 'react';
 import ConversationList from './ConversationList';
 import AddButton from './AddButton';
 import { createConversation, getConversations } from '../api/conversations';
+import { redirect } from 'next/navigation';
 
-function Sidebar({ activeConversationID, setActiveConversationID }) {
+function Sidebar({ activeConversationID }) {
     const [conversations, setConversations] = useState([]);
 
     useEffect(() => {
-    getConversations().then(setConversations);
-}, []);
+        getConversations().then(setConversations);
+    }, []);
 
     function createNewConversation() {
         createConversation('New Conversation').then((newConversation) => {
-            setActiveConversationID(newConversation.id);
+            redirect(`/chats/${newConversation.id}`);
         });
     }
 
@@ -21,11 +23,7 @@ function Sidebar({ activeConversationID, setActiveConversationID }) {
             <div>
                 <AddButton createNewConversation={createNewConversation} />
             </div>
-            <ConversationList
-                conversations={conversations}
-                activeConversationID={activeConversationID}
-                setActiveConversationID={setActiveConversationID}
-            />
+            <ConversationList activeConversationID={activeConversationID} conversations={conversations} />
         </aside>
     );
 }

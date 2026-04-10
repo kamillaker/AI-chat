@@ -1,17 +1,27 @@
+'use client';
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
+import { useState, useEffect } from 'react';
+import { getMessages, createMessage } from '../api/messages';
 
-function ChatPanel({ messages, appendMessage, loading }) {
+function ChatPanel({ activeConversationID }) {
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        getMessages(activeConversationID).then(setMessages);
+    }, [activeConversationID]);
+
+    function appendMessage(input) {
+        const newMessages = [...messages, { role: 'user', text: input }];
+        setMessages(newMessages);
+        createMessage(activeConversationID, input).then((aiMessage) => {
+            setMessages([...newMessages, aiMessage]);
+        });
+    }
+
     return (
         <main className="flex flex-col flex-1">
             <MessageList messages={messages} />
-
-            {loading && (
-                <div className="p-2 text-center text-gray-400">
-                    AI is typing...
-                </div>
-            )}
-
             <MessageForm appendMessage={appendMessage} />
         </main>
     );

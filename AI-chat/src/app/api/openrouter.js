@@ -1,5 +1,5 @@
-const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-const MODEL = 'z-ai/glm-4.5-air:free';
+const API_KEY = process.env.OPENROUTER_API_KEY;
+const MODEL = 'google/gemini-3.1-flash-lite-preview';
 export const BASE_URL = 'https://openrouter.ai/api/v1';
 
 async function completionsRequest(model, messages, stream = false) {
@@ -21,5 +21,9 @@ async function completionsRequest(model, messages, stream = false) {
 export async function llmRequest(messages) {
     const response = await completionsRequest(MODEL, messages);
     const data = await response.json();
-    return data;
+    console.info(`Response from OpenRouter: ${response}`);
+    if (data.choices.length > 0) {
+        return data.choices[0].message.content;
+    }
+    return '<...no answer from LLM...>';
 }
