@@ -1,20 +1,15 @@
-const CONVERSATION_DATABASE = [
-    { id: 1, title: 'How is your day?' },
-    { id: 2, title: 'Help me with homework' },
-];
+import { prisma } from '../db';
 
 async function getConversations() {
-    return CONVERSATION_DATABASE;
+    return await prisma.conversation.findMany({
+        orderBy: { createdAt: 'desc' },
+    });
 }
 
 async function createConversation(title: string) {
-    const id = CONVERSATION_DATABASE.length + 1;
-    const newConversation = {
-        id,
-        title,
-    };
-    CONVERSATION_DATABASE.push(newConversation);
-    return newConversation;
+    return await prisma.conversation.create({
+        data: { title },
+    });
 }
 
 export async function GET() {
@@ -26,4 +21,12 @@ export async function POST(request: Request) {
     const payload: { title: string } = await request.json();
     const newConversation = await createConversation(payload.title);
     return Response.json(newConversation);
+}
+
+export async function DELETE(request: Request) {
+    const url = new URL(request.url);
+    const id = url.searchParams.get('id') ?? '';
+    await prisma.message.deleteMany({ where: { conversationId: id } });
+    await prisma.conversation.delete({ where: { id } });
+    return Response.json({ success: true });
 }

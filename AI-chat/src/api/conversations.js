@@ -1,11 +1,32 @@
-export async function getConversations() {
-    const response = await fetch('/api/conversations');
-    return await response.json();
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { redirect } from 'next/navigation';
+
+export function getConversations() {
+    return useQuery({
+        queryKey: ['conversations'],
+        queryFn: () => fetch('/api/conversations').then((res) => res.json()),
+    });
 }
 
-export async function createConversation(title) {
-    return await fetch('/api/conversations', {
-        method: 'POST',
-        body: JSON.stringify({ title }),
+export function createConversation(title) {
+    const body = JSON.stringify({ title });
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: () => fetch('/api/conversations', { method: 'POST', body }).then((r) => r.json()),
+        onSuccess: (r) => {
+            queryClient.invalidateQueries({ queryKey: ['conversations'] }).then(() => {
+                redirect(`/chats/${r.id}`);
+            });
+        },
+    });
+}
+
+export function deleteConversation() {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fetch(`/api/conversations?id=${id}`, { method: 'DELETE' }).then(r => r.json()),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['conversations'] });
+        },
     });
 }
