@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { Providers } from './providers';
 import './globals.css';
 
 const geistSans = Geist({
@@ -29,9 +28,7 @@ export default function RootLayout({
                 <nav className="relative bg-gray-800/50 my-2">
                     <h3 className="p-2">AI chat</h3>
                 </nav>
-                <div id="root">
-                    <Providers>{children}</Providers>
-                </div>
+                <div id="root">{children}</div>
             </body>
         </html>
     );
