@@ -7,15 +7,19 @@ function ConversationList({ activeConversationID }) {
     const response = getConversations();
     const conversations = response.data ?? [];
 
-    const conversationElements = [];
-    for (const conversation of conversations) {
-        conversationElements.push(
-            <Link href={`/chats/${conversation.id}`} key={conversation.id}>
-                <Conversation title={conversation.title} isActive={activeConversationID == conversation.id} />
-            </Link>,
-        );
-    }
-    return <>{conversationElements}</>;
+    return (
+        <>
+            {conversations.map((conversation) => (
+                <Link href={`/chats/${conversation.id}`} key={conversation.id}>
+                    <Conversation
+                        id={conversation.id}
+                        title={conversation.title}
+                        isActive={activeConversationID == conversation.id}
+                    />
+                </Link>
+            ))}
+        </>
+    );
 }
 
 export default ConversationList;

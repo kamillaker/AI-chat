@@ -20,3 +20,13 @@ export function createConversation(title) {
         },
     });
 }
+
+export function deleteConversation() {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fetch(`/api/conversations?id=${id}`, { method: 'DELETE' }).then(r => r.json()),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['conversations'] });
+        },
+    });
+}

@@ -22,3 +22,11 @@ export async function POST(request: Request) {
     const newConversation = await createConversation(payload.title);
     return Response.json(newConversation);
 }
+
+export async function DELETE(request: Request) {
+    const url = new URL(request.url);
+    const id = url.searchParams.get('id') ?? '';
+    await prisma.message.deleteMany({ where: { conversationId: id } });
+    await prisma.conversation.delete({ where: { id } });
+    return Response.json({ success: true });
+}

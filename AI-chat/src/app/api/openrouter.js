@@ -1,5 +1,5 @@
 const API_KEY = process.env.OPENROUTER_API_KEY;
-const MODEL = 'google/gemini-3.1-flash-lite-preview';
+const MODEL = 'z-ai/glm-4.5-air:free';
 export const BASE_URL = 'https://openrouter.ai/api/v1';
 
 async function completionsRequest(model, messages, stream = false) {
