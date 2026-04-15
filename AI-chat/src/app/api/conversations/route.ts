@@ -1,16 +1,4 @@
-import { prisma } from '../db';
-
-async function getConversations() {
-    return await prisma.conversation.findMany({
-        orderBy: { createdAt: 'desc' },
-    });
-}
-
-async function createConversation(title: string) {
-    return await prisma.conversation.create({
-        data: { title },
-    });
-}
+import { createConversation, getConversations, deleteConversation } from '@/src/server/conversations';
 
 export async function GET() {
     const data = await getConversations();
@@ -24,9 +12,13 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-    const url = new URL(request.url);
-    const id = url.searchParams.get('id') ?? '';
-    await prisma.message.deleteMany({ where: { conversationId: id } });
-    await prisma.conversation.delete({ where: { id } });
-    return Response.json({ success: true });
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return new Response('Missing id', { status: 400 });
+    }
+
+    const result = await deleteConversation(id);
+    return Response.json(result);
 }

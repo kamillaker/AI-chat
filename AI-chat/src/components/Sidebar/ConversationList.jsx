@@ -1,12 +1,8 @@
 'use client';
 import Link from 'next/link';
 import Conversation from './Conversation';
-import { getConversations } from '../api/conversations';
 
-function ConversationList({ activeConversationID }) {
-    const response = getConversations();
-    const conversations = response.data ?? [];
-
+function ConversationList({ conversations, activeConversationID }) {
     return (
         <>
             {conversations.map((conversation) => (
