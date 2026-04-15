@@ -1,16 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { createMessage } from '../api/messages';
 
-function MessageForm({ conversationID }) {
+function MessageForm({ conversationId, sendMessage, isPending }) {
     const [input, setInput] = useState('');
     const [counter, setCounter] = useState(0);
 
-    const mutation = createMessage(conversationID, input);
-
     function onSubmit(event) {
         event.preventDefault();
-        mutation.mutate();
+        sendMessage({ text: input }, { body: { conversationId } });
         setInput('');
         setCounter(counter + 1);
         console.log(`Form submitted ${counter} times`);
@@ -28,8 +25,8 @@ function MessageForm({ conversationID }) {
                 />
             </div>
             <div>
-                <button type="submit" className="mx-2 p-2 bg-gray-800" disabled={mutation.isPending}>
-                    {mutation.isPending ? 'Loading...' : 'Send'}
+                <button type="submit" className="mx-2 p-2 bg-gray-800" disabled={isPending}>
+                    {isPending ? 'Loading...' : 'Send'}
                 </button>
             </div>
         </form>

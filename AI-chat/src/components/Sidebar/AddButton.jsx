@@ -1,8 +1,8 @@
 'use client';
-import { createConversation } from '../api/conversations';
+import { useConversationsMutation } from '@/src/hooks/conversations';
 
 function AddConversationButton() {
-    const mutation = createConversation('New Conversation');
+    const mutation = useConversationsMutation('New Conversation');
     return (
         <button
             className="w-full bg-red-500 hover:bg-red-600 p-3 my-1"
