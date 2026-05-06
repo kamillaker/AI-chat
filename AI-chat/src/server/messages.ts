@@ -1,6 +1,4 @@
 import { prisma } from './db';
-import { llmRequest } from './openrouter';
-import { revalidatePath } from 'next/cache';
 
 export async function getMessages(conversationId: string) {
     return await prisma.message.findMany({
