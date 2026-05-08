@@ -1,9 +1,11 @@
 services:
-  postgres:
-    image: postgres:16
+  db:
+    image: postgres:18.3
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: chatapp
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: password
     ports:
-      - "5432:5432"
+      - '5435:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql
+
