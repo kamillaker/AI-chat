@@ -30,9 +30,10 @@ export function useConversationsMutation(title) {
         },
         onSuccess: async (r) => {
             await queryClient.invalidateQueries({ queryKey });
+            router.refresh();
             router.push(`/chats/${r.id}`);
         },
-        onError: (_err, context) => {
+        onError: (_err, _variables, context) => {
             queryClient.setQueryData(queryKey, context?.previous);
         },
         onSettled: async () => {
